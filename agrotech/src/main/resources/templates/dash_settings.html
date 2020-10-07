@@ -1,0 +1,87 @@
+<div th:fragment="dashContent" class="dash_tab dash_settingsTab">
+
+    <div th:if="${currentPasswordError != null}" th:inline="text"class="alert alert-danger alert-dismissible notification">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong>Error!</strong> [[${currentPasswordError}]]
+    </div>
+
+    <div th:if="${newPasswordError != null}" th:inline="text"class="alert alert-danger alert-dismissible notification">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong>Error!</strong> [[${newPasswordError}]]
+    </div>
+
+    <form class="dash_settingsForm form-horizontal" th:action="@{/dashboard/settings/personal}" th:object="${user}" th:method="post">
+        <h4>Personal Information</h4>
+        <br>
+        <div class="form-group">
+            <label class="control-label col-sm-2">Name:</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" th:value="${name}" name="name">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2">Surname:</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" th:value="${surname}" name="surname">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2">Email:</label>
+            <div class="col-sm-10">
+                <input type="email" class="form-control" th:value="${email}" name="email">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-success" style="float: right;">Update</button>
+            </div>
+        </div>
+    </form>
+
+    <form class="dash_settingsForm form-horizontal" th:action="@{/dashboard/settings/username}" th:object="${user}" th:method="post">
+        <h4>Username</h4>
+        <h6>After changing your username you will be logged out automatically.</h6>
+        <br>
+        <div class="form-group">
+            <label class="control-label col-sm-2">Username:</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" th:value="${username}" name="Username">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-success" style="float: right;">Update</button>
+            </div>
+        </div>
+    </form>
+
+    <form class="dash_settingsForm form-horizontal" th:action="@{/dashboard/settings/password}" th:object="${user}" th:method="post">
+        <h4>Password</h4>
+        <h6>After changing your password you will be logged out automatically.</h6>
+        <br>
+        <div class="form-group">
+            <label class="control-label col-sm-2">Current Password:</label>
+            <div class="col-sm-10">
+                <input type="password" class="form-control" name="password">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2">New Password:</label>
+            <div class="col-sm-10">
+                <input type="password" class="form-control" name="newPassword">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2">Confirm New Password:</label>
+            <div class="col-sm-10">
+                <input type="password" class="form-control" name="confirmNewPassword">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-success" style="float: right;">Update</button>
+            </div>
+        </div>
+    </form>
+
+</div>

@@ -1,0 +1,57 @@
+<div th:fragment="content">
+
+    <div class="banner about-banner">
+        <div th:replace="navigation"></div>
+    </div>
+
+    <div class="productDetails">
+
+        <script type="text/javascript">
+
+            function generateTable() {
+
+                var specs = [];
+
+                $.ajax({
+                    url: "http://localhost:8080/rest/products/" + $(".productDetails .table").data("id"),
+                    dataType: "json",
+                    success: function(response) {
+
+                        var name = response.name;
+                        var specs = JSON.parse(response.specs);
+                        var keys = Object.keys(specs);
+                        var values = Object.values(specs);
+
+                        $(".productDetails h2").text(name);
+
+                        for(var i=0; i<keys.length; i++) {
+
+                            var tr = $("<tr></tr>")
+                                .append("<td>" + keys[i] + "</td>")
+                                .append("<td>" + values[i] + "</td>");
+
+                            $(".productDetails .table tbody").prepend(tr);
+                        }
+                    }
+                });
+            }
+
+            $(function() {
+                generateTable();
+            });
+
+        </script>
+
+        <img th:src="@{${'/rest/products/image/' + product.id + ''}}" onError="this.onerror=null;this.src='/assets/images/productFallbackImage.png';">
+
+        <h2 th:text="${product.name}"></h2>
+
+        <table class="table" style="font-size: 20px;" th:attr="data-id=${product.id}">
+            <tbody>
+
+            </tbody>
+        </table>
+
+    </div>
+
+</div>

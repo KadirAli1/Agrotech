@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Agro-Balkan | Login</title>
+
+    <!-- bootstrap-css -->
+    <link href="/assets/css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
+
+    <!-- css -->
+    <link rel="stylesheet" href="/assets/css/style.css" type="text/css" media="all" />
+
+    <!-- font-awesome icons -->
+    <link href="/assets/css/font-awesome.css" rel="stylesheet">
+
+    <!-- font -->
+    <link href="https://fonts.googleapis.com/css?family=Playball&amp;subset=latin-ext" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700italic,700,400italic,300italic,300' rel='stylesheet' type='text/css'>
+
+    <script src="/assets/js/jquery-1.11.1.min.js"></script>
+    <script src="/assets/js/bootstrap.js"></script>
+
+</head>
+
+<body>
+
+    <div th:if="${loginError != null}" th:inline="text"class="alert alert-danger alert-dismissible notification">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong>Error!</strong> [[${loginError}]]
+    </div>
+
+    <div class="loginWelcome">
+
+        <div class="login-container">
+
+            <h2>Login to your account</h2>
+
+            <form action="#" th:action="@{/login}"  method="post">
+                <input type="text" name="username" value="ozkan" placeholder="Username" autocomplete="off" required>
+                <input type="password" name="password" value="admin" placeholder="Password" autocomplete="off" required>
+                <input type="submit" value="Login">
+            </form>
+
+        </div>
+
+    </div>
+</body>
+</html>

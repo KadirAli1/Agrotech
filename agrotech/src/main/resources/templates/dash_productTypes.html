@@ -1,0 +1,165 @@
+<div th:fragment="dashContent" class="dash_tab dash_productTypesTab">
+
+    <div class="dash_tabContent">
+
+        <button type="button" class="btn btn-success btn" data-toggle="modal" data-target="#productTypeModal">Add new product type</button>
+
+        <!-- Modal -->
+        <div id="productTypeModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+
+                <script type="text/javascript">
+
+                    function generateNewProductTypeInputs() {
+
+                        $(".addNewSpecsBtn").click(function(e) {
+
+                            e.preventDefault();
+
+                            var form_group = $("<div class='form-group generatedFormGroup'></div>");
+                            var form_group_innerDiv = $("<div class='col-sm-10'></div>");
+                            var input = $("<input type='text' class='form-control generatedInput' name='' required>");
+                            var span = $("<span class='removeGeneratedInput'><b>Remove</b></span>");
+
+                            form_group_innerDiv.append(input);
+                            form_group_innerDiv.append(span);
+                            form_group.append(form_group_innerDiv);
+
+                            $(".newGeneratedInputs").append(form_group);
+
+                            if( $(".generatedInput").length > 0 ) {
+                                $(".newProductTypeSubmitBtn").show();
+                            }
+
+                        });
+
+                    }
+
+                    function fillGeneratedInputs() {
+
+                        var generatedInputs = $(".generatedInput");
+
+                        for(var i=0; i<generatedInputs.length; i++) {
+                            generatedInputs[i].setAttribute("name", generatedInputs[i].value);
+                        }
+                    }
+
+                    function getProductTypeSpecs() {
+
+                        $.ajax({
+                            url: "http://localhost:8080/rest/product-types/",
+                            dataType: "json",
+                            success: function(response) {
+
+                                var l = response.length;
+
+                                for(var i=0; i<l; i++) {
+
+                                    var specs = JSON.parse(response[i].specs);
+                                    var keys = Object.keys(specs);
+
+                                    var tr = $("<tr></tr>")
+                                        .append("<th scope='row'>" + response[i].id + "</th>")
+                                        .append("<td>" + response[i].name + "</td>");
+
+                                    var specsTd = "";
+
+                                    for(var j=0; j<keys.length; j++) {
+
+                                        specsTd += keys[j];
+
+                                        if(j != (keys.length - 1)) {
+                                            specsTd += ", ";
+                                        }
+                                    }
+
+                                    tr.append("<td>" + specsTd + "</td>");
+
+                                    $(".productTypesTable tbody").append(tr);
+                                }
+                            }
+                        });
+                    }
+
+                    $(function() {
+
+                        $(".newProductTypeSubmitBtn").hide();
+
+                        $(".newProductTypeForm").on("click", ".removeGeneratedInput", function() {
+                            $(this).parent().parent().remove();
+                            if( $(".generatedInput").length == 0 ) {
+                                $(".newProductTypeSubmitBtn").hide();
+                            }
+                        });
+
+                        $("form").submit(function() {
+
+                            fillGeneratedInputs();
+
+                            if( $(this).find("input[name='specs']").length > 0 ) {
+                                $(this).find("input[name='specs']").val(toJsonString($(".newGeneratedInputs")));
+                            }
+                        });
+
+                        generateNewProductTypeInputs();
+                        getProductTypeSpecs();
+                    });
+
+                </script>
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Add new product type</h4>
+                        <h6>Click to <b>add new specification</b> button then write new specification name in generated input. (e.g: Color)</h6>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-horizontal newProductTypeForm" th:action="@{/dashboard/product-types}" th:object="${productType}" th:method="post">
+                            <div class="form-group">
+                                <label class="col-sm-4">New product type name:</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control hiddenForSpecs" name="name" required>
+                                </div>
+                            </div>
+
+                            <div class="newGeneratedInputs"></div>
+
+                            <div class="form-group">
+                                <div class="col-sm-offset-0 col-sm-0" style="margin-left: 15px;">
+                                    <button type="" class="addNewSpecsBtn btn btn-default">Add new specification</button>
+                                </div>
+                            </div>
+
+                            <input type="hidden" name="specs">
+
+                            <div class="form-group">
+                                <div class="col-sm-offset-0 col-sm-0" style="margin-left: 15px;">
+                                    <button type="submit" class="newProductTypeSubmitBtn btn btn-default">Submit</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <table class="table productTypesTable" style="margin-top: 25px;">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Type Name</th>
+                <th>Type Specs</th>
+            </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+
+    </div>
+
+</div>

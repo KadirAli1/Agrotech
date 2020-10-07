@@ -1,0 +1,45 @@
+<div th:fragment="content">
+
+    <div class="banner about-banner">
+        <div th:replace="navigation"></div>
+    </div>
+
+<div class="contact">
+    <div class="container">
+        <div class="agile-contact-form">
+            <div class="col-md-6 contact-form-left">
+                <div class="w3layouts-contact-form-top">
+                    <h3>Get in touch</h3>
+                </div>
+                <div class="agileits-contact-address">
+                    <ul>
+                        <li><i class="fa fa-phone" aria-hidden="true"></i> <span>+389 71 000 000</span></li>
+                        <li><i class="fa fa-phone fa-envelope" aria-hidden="true"></i> <span><a href="#">contact@agrobalkan.com</a></span></li>
+                        <li><i class="fa fa-map-marker" aria-hidden="true"></i> <span>Руѓер Бошковиќ 16, Скопје 1000</span></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-6 contact-form-right">
+                <div class="contact-form-top">
+                    <h3>Send us a message</h3>
+                </div>
+                <div class="agileinfo-contact-form-grid">
+                    <form action="#" method="post">
+                        <input type="text" name="Name" placeholder="Name" required="">
+                        <input type="email" name="Email" placeholder="Email" required="">
+                        <input type="text" name="Telephone" placeholder="Telephone" required="">
+                        <textarea name="Message" placeholder="Message" required=""></textarea>
+                        <button class="btn1">Submit</button>
+                    </form>
+                </div>
+            </div>
+            <div class="clearfix"> </div>
+        </div>
+
+        <div class="w3agile-map">
+            <h3>Find us here</h3>
+            <iframe src="https://maps.google.com/maps?q=finki&t=&z=15&ie=UTF8&iwloc=&output=embed"></iframe>
+        </div>
+    </div>
+</div>
+</div>

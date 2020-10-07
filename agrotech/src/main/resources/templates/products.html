@@ -1,0 +1,231 @@
+<div th:fragment="content">
+
+    <div class="banner about-banner">
+        <div th:replace="navigation"></div>
+    </div>
+
+    <div class="container-fluid" style="background: #eee; padding-bottom: 25px;">
+
+        <script type="text/javascript">
+
+            function param(name) {
+                return (location.search.split(name + '=')[1] || '').split('&')[0];
+            }
+
+            function checkCheckboxes(paramName, checkAt, attr) {
+
+                if( param(paramName).length > 0 ) {
+
+                    var types = param(paramName).split(",");
+                    var elems = checkAt
+
+                    for(var i=0; i<elems.length; i++) {
+                        for(var j=0; j<types.length; j++) {
+                            if(elems[i].getAttribute(attr) == types[j]) {
+                                elems[i].setAttribute("checked", true);
+                            }
+                        }
+                    }
+                }
+            }
+
+            $(function() {
+
+                checkCheckboxes("type", $(".product_type"), "data-type-id");
+                checkCheckboxes("country", $(".product_zone"), "data-country-id");
+
+                $(".filterProducts").click(function (e){
+
+                    e.preventDefault();
+
+                    var typeVals = "";
+                    var zoneVals = "";
+                    var filter = "";
+
+                    if( $(".product_type:checked").length > 0 ) {
+                        var typeVals = $(".product_type:checked").map(function () {
+                            return $(this).data("type-id");
+                        }).get().join(",");
+                    }
+
+                    if( $(".product_zone:checked").length > 0 ) {
+                        var zoneVals = $(".product_zone:checked").map(function () {
+                            return $(this).data("country-id");
+                        }).get().join(",");
+                    }
+
+                    if(typeVals.length > 0) {
+                        filter += "?type=" + typeVals;
+                    }
+
+                    if(zoneVals.length > 0) {
+
+                        if(typeVals.length > 0) filter += "&";
+                        else filter += "?";
+
+                        filter += "country=" + zoneVals;
+                    }
+
+                    var url = "http://localhost:8080/products" + filter;
+                    window.location.href = url;
+                });
+
+                var compareIds = [];
+
+                $(".compareBtn").click(function() {
+
+                    if($(this).hasClass("active")) {
+                        $(this).removeClass("active");
+                        $(".compareNow").hide();
+                        compareIds.splice(compareIds.indexOf($(this).data("compare-id")), 1);
+                        return;
+                    }
+
+                    if(compareIds.length == 2) {
+                        alert("You can compare only two products!");
+                        return;
+                    }
+
+                    if(compareIds.length > 0) {
+                        $(".compareNow").show();
+                    }
+
+                    compareIds.push($(this).data("compare-id"));
+                    $(this).addClass("active");
+                });
+
+                $(".compareNow").click(function() {
+
+                    var url = "http://localhost:8080/products/compare/";
+
+                    if(compareIds.length < 2) {
+                        alert("You need to choose two products for comparison!");
+                        return;
+                    }
+
+                    if(compareIds.length == 2) {
+                        url += compareIds[0] + "/" + compareIds[1];
+                        window.location.href = url;
+                    }
+                });
+
+            });
+
+        </script>
+
+        <button class="compareNow">Compare Now</button>
+
+        <div th:if="${compareError != null}" th:inline="text"class="alert alert-danger alert-dismissible notification">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Error!</strong> [[${compareError}]]
+        </div>
+
+        <div class="row" style="margin-top: 20px;">
+
+            <h1 style="text-align: center; padding: 25px 0;">Products</h1>
+
+            <div class="col-md-4">
+
+                <form class="product_type_and_zone">
+
+                    <div class="product_type_and_zone_separator">
+
+                        <h4>Product Types</h4>
+
+                        <div class="form_element" th:each="productType : ${productTypes}">
+                            <input type="checkbox" class="product_type" th:attr="data-type-id=${productType.id}">
+                            <label th:text="${productType.name}"></label>
+                        </div>
+
+                    </div>
+
+                    <div class="product_type_and_zone_separator">
+
+                        <h4>Country</h4>
+
+                        <div class="form_element" th:each="country : ${countries}">
+                            <input type="checkbox" class="product_zone" th:attr="data-country-id=${country.id}">
+                            <label th:text="${country.name}"></label>
+                        </div>
+
+                    </div>
+
+                    <button class="filterProducts">Filter Products</button>
+
+                </form>
+
+            </div>
+
+            <div class="col-md-8">
+
+                <div class="row">
+
+                    <div class="col-md-4 product_card" th:if="${#lists.isEmpty(bothFiltered)}" th:each="product : ${typeFilteredProducts}">
+
+                        <div class="productCardImage MERGED">
+                            <img th:src="@{${'/rest/products/image/' + product.id}}" onError="this.onerror=null;this.src='/assets/images/productFallbackImage.png';">
+                            <a th:href="@{${'/products/' + product.id}}" th:text="${product.name}"></a>
+                        </div>
+
+                        <div class="col-md-6 compareBtn" th:attr="data-compare-id=${product.id}">Compare &nbsp;&nbsp;<span class="glyphicon glyphicon-transfer" aria-hidden="true"></span></div>
+                        <div class="col-md-6 comparePrice" th:inline="text">
+                            [[${#numbers.formatDecimal(product.price, 0, 'COMMA', 2, 'POINT')}]]
+                            <span>&euro;</span>
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-4 product_card" th:if="${#lists.isEmpty(bothFiltered)}" th:each="product : ${countryFilteredProducts}">
+
+                        <div class="productCardImage MERGED">
+                            <img th:src="@{${'/rest/products/image/' + product.id}}" onError="this.onerror=null;this.src='/assets/images/productFallbackImage.png';">
+                            <a th:href="@{${'/products/' + product.id}}" th:text="${product.name}"></a>
+                        </div>
+
+                        <div class="col-md-6 compareBtn" th:attr="data-compare-id=${product.id}">Compare &nbsp;&nbsp;<span class="glyphicon glyphicon-transfer" aria-hidden="true"></span></div>
+                        <div class="col-md-6 comparePrice" th:inline="text">
+                            [[${#numbers.formatDecimal(product.price, 0, 'COMMA', 2, 'POINT')}]]
+                            <span>&euro;</span>
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-4 product_card" th:if="${not #lists.isEmpty(bothFiltered)}" th:each="product : ${bothFiltered}">
+
+                        <div class="productCardImage MERGED">
+                            <img th:src="@{${'/rest/products/image/' + product.id}}" onError="this.onerror=null;this.src='/assets/images/productFallbackImage.png';">
+                            <a th:href="@{${'/products/' + product.id}}" th:text="${product.name}"></a>
+                        </div>
+
+                        <div class="col-md-6 compareBtn" th:attr="data-compare-id=${product.id}">Compare &nbsp;&nbsp;<span class="glyphicon glyphicon-transfer" aria-hidden="true"></span></div>
+                        <div class="col-md-6 comparePrice" th:inline="text">
+                            [[${#numbers.formatDecimal(product.price, 0, 'COMMA', 2, 'POINT')}]]
+                            <span>&euro;</span>
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-4 product_card" th:each="product : ${products}">
+
+                        <div class="productCardImage">
+                            <img th:src="@{${'/rest/products/image/' + product.id}}" onError="this.onerror=null;this.src='/assets/images/productFallbackImage.png';">
+                            <a th:href="@{${'/products/' + product.id}}" th:text="${product.name}"></a>
+                        </div>
+
+                        <div class="col-md-6 compareBtn" th:attr="data-compare-id=${product.id}">Compare &nbsp;&nbsp;<span class="glyphicon glyphicon-transfer" aria-hidden="true"></span></div>
+                        <div class="col-md-6 comparePrice" th:inline="text">
+                            [[${#numbers.formatDecimal(product.price, 0, 'COMMA', 2, 'POINT')}]]
+                            <span>&euro;</span>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

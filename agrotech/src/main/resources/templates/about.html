@@ -1,0 +1,62 @@
+<div th:fragment="content">
+
+<div class="banner about-banner">
+    <div th:replace="navigation"></div>
+</div>
+
+    <div class="different">
+        <div class="container">
+            <div class="w3-different-heading">
+                <h3>Why we are <span>different</span></h3>
+            </div>
+            <div class="w3agile-different-info">
+                <p>Agro-Balkan was established in 1989 and currently employs about 90 workers in various professional fields. Its main activities are import-export of agricultural commodity goods of all profiles, near which its field of activity has also expanded with the import of tires from different countries of the world.</p>
+            </div>
+        </div>
+    </div>
+    <div class="team">
+        <div class="container">
+            <div class="agileinfo-team-heading">
+                <h3>Our <span>Team</span></h3>
+            </div>
+            <div class="team-grids">
+                <div class="agileinfo-team-grid">
+                    <img src="/assets/images/team-member1.png" alt="" />
+                    <div class="captn">
+                        <h4>Kadir Ali</h4>
+                        <div class="w3l-social">
+                            <ul>
+                                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                                <li><a href="#"><i class="fa fa-rss"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="agileinfo-team-grid">
+                    <img src="/assets/images/team-member2.png" alt="" />
+                    <div class="captn">
+                        <h4>Özkan İliyaz</h4>
+                        <div class="w3l-social">
+                            <ul>
+                                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                                <li><a href="#"><i class="fa fa-rss"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="clearfix"> </div>
+            </div>
+        </div>
+    </div>
+    <script src="/assets/js/jarallax.js"></script>
+    <script type="text/javascript">
+        /* init Jarallax */
+        $('.jarallax').jarallax({
+            speed: 0.5,
+            imgWidth: 1366,
+            imgHeight: 768
+        })
+    </script>
+</div>

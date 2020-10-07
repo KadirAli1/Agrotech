@@ -1,0 +1,67 @@
+<div class="header">
+        <div class="container">
+            <div class="header-left">
+                <div class="w3layouts-logo">
+                    <h1>
+                        <img src="/assets/images/logo.png" width="200">
+                    </h1>
+                </div>
+            </div>
+            <div class="header-right">
+                <div class="agileinfo-social-grids">
+                    <ul>
+                        <li>
+                            <form th:action="@{/search}" th:method="get">
+                                <div class="input-group searchInputGroup">
+                                    <input type="text" class="form-control searchInputGroupInput" placeholder="Search" name="query">
+                                    <div class="input-group-btn">
+                                        <button class="btn btn-sm btn-primary searchInputGroupButton" type="submit">
+                                            <i class="glyphicon glyphicon-search"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </li>
+                        <li><a th:href="@{/login}">Login &nbsp;&nbsp;</a></li>
+                        <li><a th:href="@{/?lang=mk}"><img class="langImg" src="/assets/images/mk.png"></a></li>
+                        <li><a th:href="@{/?lang=alb}"><img class="langImg" src="/assets/images/alb.png"></a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="clearfix"> </div>
+        </div>
+    </div>
+    <div class="header-bottom">
+        <div class="container">
+            <div class="top-nav">
+                <nav class="navbar navbar-default">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                    </div>
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <ul class="nav navbar-nav">
+                            <li><a class="list-border" th:classappend="${activeNav == 'home' ? 'active' : ''}" th:href="@{/}">Home</a></li>
+                            <li><a th:href="@{/about}" th:classappend="${activeNav == 'about' ? 'active' : ''}">About us</a></li>
+                            <li class=""><a href="#" class="dropdown-toggle hvr-bounce-to-bottom" th:classappend="${activeNav == 'products' ? 'active' : ''}" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Products<span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="hvr-bounce-to-bottom" th:href="@{/products}">All products</a></li>
+                                    <li th:each="productType : ${productTypes}">
+                                        <a class="hvr-bounce-to-bottom"
+                                           th:href="@{${'/products?type=' + productType.id}}"
+                                           th:text="${productType.name}"></a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li><a class="list-border1" th:classappend="${activeNav == 'contact' ? 'active' : ''}" th:href="@{/contact}">Contact</a></li>
+                        </ul>
+                        <div class="clearfix"> </div>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </div>

@@ -1,0 +1,64 @@
+<div th:fragment="content">
+
+    <div class="welcome-top">
+
+        <div class="top-overlay"></div>
+
+        <div th:replace="navigation"></div>
+
+        <div class="brandMotto" th:text="#{motto}"></div>
+
+    </div>
+
+<div class="welcome">
+    <div class="container">
+        <div class="w3-welcome-grids">
+            <div class="col-md-5 w3l-welcome-left">
+                <h2>Welcome <span>to Agro-Balkan</span></h2>
+                <p>Agro-Balkan was established in 1989 and currently employs about 90 workers in various professional fields. Its main activities are import-export of agricultural commodity goods of all profiles, near which its field of activity has also expanded with the import of tires from different countries of the world.</p>
+                <div class="w3ls-button">
+                    <a th:href="@{/about}">More</a>
+                </div>
+            </div>
+            <div class="col-md-7 w3l-welcome-right">
+                <div class="w3l-welcome-right-grids">
+                    <div class="col-sm-5 w3l-welcome-right-img">
+                        <img src="/assets/images/about-1.jpg" alt="" />
+                    </div>
+                    <div class="col-sm-7 w3l-welcome-right-img1">
+                        <img src="/assets/images/about-2.jpg" alt="" />
+                    </div>
+                    <div class="clearfix"> </div>
+                </div>
+            </div>
+            <div class="clearfix"> </div>
+        </div>
+    </div>
+</div>
+
+<div class="services">
+    <div class="container">
+        <div class="agileits-services-grids">
+            <div class="col-md-4 agileinfo-services-left">
+                <h3>Our <span>Services</span></h3>
+                <p>We are friends of all agriculturists. If you want to step into the agricultural sector in the Balkans one day, it is our duty to serve you, so that you can adapt easily.</p>
+            </div>
+            <div class="col-md-8 agileinfo-services-right">
+                <div class="col-md-6 w3-agileits-services-grid">
+                    <i class="fa fa-euro" aria-hidden="true" style="color: #bdcd00;font-size: 2em;"></i>
+                    <h4>Prices of agricultural machines</h4>
+                    <p>You can easily check prices of agricultural machines.</p>
+                </div>
+                <div class="col-md-6 w3-agileits-services-grid">
+                    <i class="fa fa-exchange" aria-hidden="true" style="color: #bdcd00;font-size: 2em;"></i>
+                    <h4>Compare agricultural machines.</h4>
+                    <p>You can select two agricultural machines and easily compare them.</p>
+                </div>
+                <div class="clearfix"> </div>
+            </div>
+            <div class="clearfix"> </div>
+        </div>
+    </div>
+</div>
+
+</div>

@@ -1,0 +1,32 @@
+<div th:fragment="dashContent" class="dash_tab dash_homeTab">
+
+    <script type="text/javascript">
+
+        $(function() {
+            if( $(".dash_homeBoxItem").length == 3 ) {
+                $(".dash_homeTabCenter").width("90%");
+                $(".dash_homeBoxItem").width("33.33%");
+            }
+            if($(".dash_homeBoxItem").length == 1) {
+                $(".dash_homeTabCenter").width("50%");
+                $(".dash_homeBoxItem").width("100%");
+            }
+        });
+
+    </script>
+
+    <div class="dash_homeTabCenter">
+        <div sec:authorize="hasRole('ADMIN')" class="dash_homeBoxItem">
+            <p><span th:text="${countUsers}"></span><br>Users</p>
+            <h5><a th:href="@{/dashboard/users}">Add new user</a></h5>
+        </div>
+        <div class="dash_homeBoxItem">
+            <p><span th:text="${countProducts}"></span><br>Products</p>
+            <h5><a th:href="@{/dashboard/products}">Add new product</a></h5>
+        </div>
+        <div sec:authorize="hasRole('ADMIN')" class="dash_homeBoxItem">
+            <p><span th:text="${countProductTypes}"></span><br>Product Types</p>
+            <h5><a th:href="@{/dashboard/product-types}">Add new product type</a></h5>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,36 @@
+<div th:fragment="content">
+
+    <div class="banner about-banner">
+        <div th:replace="navigation"></div>
+    </div>
+
+    <div class="container-fluid" style="background: #eee; padding: 25px;">
+
+        <div class="row">
+
+            <h4 th:text="${searchInfo}" style="padding-left: 25px;"></h4>
+
+            <div class="col-md-12" style="margin-top: 20px;" th:each="product : ${products}">
+                <div class="col-xs-2">
+                <img
+                        th:src="@{${'/rest/products/image/' + product.id}}"
+                        onError="this.onerror=null;this.src='/assets/images/productFallbackImage.png';"
+                        style="width: 150px; height: 150px; object-fit: cover;">
+                </div>
+                <div>
+                    <p th:text="${'Name: ' + product.name}"></p>
+                    <p th:text="${'Country: ' + product.country.name}"></p>
+                    <p th:inline="text">
+                        Price:
+                        [[${#numbers.formatDecimal(product.price, 0, 'COMMA', 2, 'POINT')}]]
+                        <span>&euro;</span>
+                    </p>
+                    <p><a th:href="@{${'/products/' + product.id}}">Show Product</a></p>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
